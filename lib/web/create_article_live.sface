@@ -1,0 +1,32 @@
+<StatelessComponent
+  module={maybe_component(Bonfire.UI.Social.WritePostContentLive, @__context__)}
+  reply_to_id={@reply_to_id}
+  context_id={@context_id}
+  to_boundaries={@to_boundaries}
+  boundary_preset={@boundary_preset}
+  to_circles={@to_circles}
+  exclude_circles={@exclude_circles}
+  verb_permissions={@verb_permissions}
+  mentions={@mentions}
+  smart_input_opts={Map.put(@smart_input_opts || %{}, :create_object_type, :article)}
+  showing_within={@showing_within}
+  insert_text={@insert_text}
+  preloaded_recipients={@preloaded_recipients}
+  uploads={@uploads}
+  uploaded_files={@uploaded_files}
+  title_prompt={@title_prompt}
+  selected_cover={@selected_cover}
+  open_boundaries={@open_boundaries}
+  boundaries_modal_id={@boundaries_modal_id}
+  reset_smart_input={@reset_smart_input}
+  preview_boundary_for_id={@preview_boundary_for_id}
+  preview_boundary_for_username={@preview_boundary_for_username}
+  preview_boundary_verbs={@preview_boundary_verbs}
+  custom_emojis={@custom_emojis}
+  quoted_url={@quoted_url}
+  textarea_container_class={@textarea_container_class}
+  textarea_container_class_alpine={@textarea_container_class_alpine}
+  textarea_class={@textarea_class}
+  replied_activity_class={@replied_activity_class}
+  event_target={@event_target}
+/>
