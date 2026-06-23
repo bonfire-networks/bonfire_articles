@@ -5,6 +5,9 @@
       {#match [articles: articles]}
         <Bonfire.UI.Common.WidgetBlockLive
           widget_title={@widget_title || l("Recent Articles")}
+          reset_cache_event="Bonfire.UI.Articles.WidgetRecentArticlesLive:reset_recent_articles"
+          reset_cache_values={%{limit: @limit}}
+          can_reset
           class={
             "w-full p-4 flex-auto mx-auto rounded-box border border-base-content/20",
             "bonfire-wrapper overflow-hidden": @image_position == :bottom

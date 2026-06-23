@@ -9,35 +9,26 @@ defmodule Bonfire.UI.Articles.WidgetRecentArticlesLive do
   """
   use Bonfire.UI.Common.Web, :stateless_component
 
-  alias Bonfire.Common.Cache
-
   prop limit, :integer, default: 5
   prop widget_title, :string, default: nil
   prop image_position, :atom, default: :side, values: [:side, :bottom]
 
-  def load(current_user, limit \\ 5) do
-    Cache.maybe_apply_cached(&do_load/2, [current_user, limit],
-      cache_key: "widget_recent_articles:#{cache_user_id(current_user)}:#{limit}",
-      expire: :timer.minutes(60)
-    )
+  @doc "Delegates to the cached `Bonfire.Articles.list_recent/2`; wraps in the UI's `[articles: …]` shape."
+  def load(current_user, limit \\ 5),
+    do: [articles: Bonfire.Articles.list_recent(current_user, limit)]
+
+  @doc "Busts the recent-articles cache for the current viewer (recomputed lazily on next read)."
+  def handle_event("reset_recent_articles", params, socket) do
+    Bonfire.Articles.list_recent(current_user(socket), reset_limit(params), cache: :reset)
+
+    {:noreply,
+     assign_flash(
+       socket,
+       :info,
+       l("Recent articles have been reset.") <> l(" You need to reload to see updates, if any.")
+     )}
   end
 
-  defp do_load(current_user, limit) do
-    # Directly query articles using FeedActivities (simpler than feed_assigns_non_live)
-    case Bonfire.Social.FeedActivities.feed(
-           %{feed_name: :articles},
-           current_user: current_user,
-           paginate: %{limit: limit},
-           preload: [:with_post_content, :with_subject, :with_media]
-         ) do
-      %{edges: edges} when is_list(edges) and edges != [] ->
-        [articles: edges]
-
-      _ ->
-        [articles: []]
-    end
-  end
-
-  defp cache_user_id(nil), do: "guest"
-  defp cache_user_id(current_user), do: Bonfire.Common.Enums.id(current_user) || "guest"
+  defp reset_limit(%{"limit" => limit}) when is_binary(limit), do: String.to_integer(limit)
+  defp reset_limit(_), do: 5
 end

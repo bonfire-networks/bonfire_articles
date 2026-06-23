@@ -102,4 +102,37 @@ defmodule Bonfire.Articles do
   def ap_receive_activity(creator, activity, object, opts \\ []) do
     Posts.ap_receive_activity(creator, activity, object, Keyword.put(opts, :schema, Article))
   end
+
+  # --- Recent-articles widget loader (cached per user + limit) ---
+
+  @doc """
+  Recent articles from followed users, for the "Recent Articles" widget. Cached per user and limit
+  for 1h; the key is built once by `recent_cache_key/2` so the load and any reset always agree.
+  Pass the standard `:cache` opt (`cache: :refresh` busts + recomputes — the widget's refresh button).
+  """
+  def list_recent(current_user, limit \\ 5, opts \\ []) do
+    Cache.maybe_apply_cached(
+      &do_list_recent/2,
+      [current_user, limit],
+      opts
+      |> Keyword.put(:cache_key, recent_cache_key(current_user, limit))
+      |> Keyword.put_new(:expire, :timer.minutes(60))
+    )
+  end
+
+  defp do_list_recent(current_user, limit) do
+    case Bonfire.Social.FeedActivities.feed(
+           %{feed_name: :articles},
+           current_user: current_user,
+           paginate: %{limit: limit},
+           preload: [:with_post_content, :with_subject, :with_media]
+         ) do
+      %{edges: edges} when is_list(edges) and edges != [] -> edges
+      _ -> []
+    end
+  end
+
+  @doc "Cache key for `list_recent/3` — used by both the loader and any reset, so they can't drift."
+  def recent_cache_key(current_user, limit),
+    do: "widget_recent_articles:#{id(current_user) || "guest"}:#{limit}"
 end
