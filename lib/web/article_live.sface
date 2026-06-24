@@ -238,7 +238,8 @@
             {#case @cw == true or (@cw != false and not is_nil(summary))}
               {#match cw}
                 {#if cw and e(post_content(@object), :html_body, nil)}
-                  <Bonfire.UI.Social.Activity.CWLive
+                  <StatelessComponent
+                    module={maybe_component(Bonfire.UI.Social.Activity.CWLive, @__context__)}
                     cw={@cw}
                     activity_component_id={@activity_component_id}
                     summary={summary}
