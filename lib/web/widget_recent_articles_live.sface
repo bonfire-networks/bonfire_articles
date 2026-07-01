@@ -8,15 +8,13 @@
           reset_cache_event="Bonfire.UI.Articles.WidgetRecentArticlesLive:reset_recent_articles"
           reset_cache_values={%{limit: @limit}}
           can_reset
-          class={
-            "w-full p-4 flex-auto mx-auto rounded-box border border-base-content/20",
-            "bonfire-wrapper overflow-hidden": @image_position == :bottom
-          }
+          class="pt-card border-y border-y-secondary border-y-hair pb-2"
+          title_class="flex items-center justify-between pb-card text-xs font-normal uppercase tracking-wide text-base-content px-base"
           empty={articles == []}
           empty_icon="ion:newspaper-outline"
           empty_message={l("No articles to read yet. Federated long-form posts will show up here as soon as they arrive.")}
         >
-          <div class="flex flex-col divide-y divide-base-content/10">
+          <div class="flex flex-col bonfire-wrapper divide-secondary divide-hair !px-0 gap-4">
             {#for fp <- articles}
               {#case {e(fp, :activity, nil), e(fp, :activity, :object, nil) || e(fp, :object, nil),
                  e(fp, :activity, :subject, nil) || e(fp, :subject, nil)}}
@@ -26,67 +24,14 @@
                         e(object, :media, nil)
                     )}
                     {#match {primary_image, _files}}
-                      <article class={
-                        "group py-4 first:pt-0 last:pb-0",
-                        "flex gap-4": @image_position == :side,
-                        "flex flex-col gap-2": @image_position == :bottom
-                      }>
-                        {!-- Content --}
-                        <div class="flex flex-col gap-1 flex-1 min-w-0">
-                          {!-- Author badge --}
-                          {#case subject}
-                            {#match author when not is_nil(author)}
-                              <span class="text-xs font-medium text-primary/80 uppercase tracking-wide truncate max-w-full">
-                                {e(author, :profile, :name, nil) || e(author, :character, :username, l("Unknown"))}
-                              </span>
-                            {#match _}
-                          {/case}
-
-                          {!-- Title --}
-                          <LinkLive
-                            to={path(object)}
-                            class="text-sm font-semibold link link-hover line-clamp-2 leading-snug transition-colors"
-                          >
-                            {rich(e(object, :post_content, :name, nil) || l("Untitled"))}
-                          </LinkLive>
-
-                          {!-- Description --}
-                          {#case e(object, :post_content, :summary, nil) || e(object, :post_content, :html_body, nil)}
-                            {#match description when is_binary(description) and description != ""}
-                              <p class="text-xs text-base-content/60 line-clamp-2 leading-relaxed">
-                                {Bonfire.Common.Text.sentence_truncate(Bonfire.Common.Text.text_only(description), 200, "...")}
-                              </p>
-                            {#match _}
-                          {/case}
-                        </div>
-
-                        {!-- Thumbnail --}
-                        {#case Media.media_url(primary_image)}
-                          {#match url when is_binary(url)}
-                            <LinkLive
-                              to={path(object)}
-                              class={
-                                "block overflow-hidden rounded-lg",
-                                "shrink-0 w-[82px] h-[82px]": @image_position == :side,
-                                "w-full aspect-video": @image_position == :bottom
-                              }
-                            >
-                              <LazyImage
-                                parent_id={deterministic_dom_id("article_widget_thumb", id(activity) || id(object))}
-                                class={
-                                  "rounded-lg object-cover transition-all",
-                                  "w-[82px] h-[82px]": @image_position == :side,
-                                  "w-full h-full": @image_position == :bottom
-                                }
-                                fallback_class="w-4 h-4 text-base-content/50"
-                                src={url}
-                                alt={Bonfire.Files.Media.media_alt(primary_image)}
-                                fallback_icon="ion:newspaper-outline"
-                              />
-                            </LinkLive>
-                          {#match _}
-                        {/case}
-                      </article>
+                      <Bonfire.UI.Articles.ArticleLive
+                        object={object}
+                        activity={activity}
+                        subject={subject}
+                        primary_image={primary_image}
+                        image_position={@image_position}
+                        showing_within={:widget}
+                      />
                   {/case}
                 {#match _}
               {/case}

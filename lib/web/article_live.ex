@@ -8,6 +8,8 @@ defmodule Bonfire.UI.Articles.ArticleLive do
   prop activity, :any, default: nil
   prop subject, :any, default: nil
   prop primary_image, :any, default: nil
+  # `:widget` layout only — :side (thumbnail beside text) or :bottom (full-width below)
+  prop image_position, :atom, default: :side
   prop viewing_main_object, :boolean, default: false
   prop showing_within, :atom, default: nil
   prop cw, :boolean, default: nil
