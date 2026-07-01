@@ -3,7 +3,7 @@ defmodule Bonfire.Articles.Integration do
   use Bonfire.Common.Config
   use Bonfire.Common.Utils
 
-  declare_extension("Articles",
+  declare_extension(l("Articles"),
     icon: "ph:article-ny-times-duotone",
     emoji: "📰",
     description: l("Functionality for writing and reading long-form articles.")
