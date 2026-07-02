@@ -1,5 +1,5 @@
-<!-- {#if @showing_within == :widget}
-  {!-- Compact list-row layout for sidebar widgets; @image_position: :side or :bottom. Links navigate (no preview modal). --}
+{!-- {#if @showing_within == :widget}
+  <!-- Compact list-row layout for sidebar widgets; @image_position: :side or :bottom. Links navigate (no preview modal). -->
   <article
     data-id="activity_article"
     id={deterministic_dom_id(__MODULE__, id(@activity) || id(@object) || "no-id", "article_widget", @parent_id)}
@@ -10,7 +10,6 @@
       "flex flex-col gap-2": @image_position == :bottom
     ]}
     >
-    {!-- Text --}
     <div class="flex flex-col gap-1 flex-1 min-w-0">
       {#case @subject || e(@activity, :subject, nil) || e(@object, :created, :creator, nil)}
         {#match %{id: _} = author}
@@ -36,7 +35,6 @@
       {/case}
     </div>
 
-    {!-- Thumbnail --}
     {#case Media.media_url(@primary_image)}
       {#match url when is_binary(url)}
         <LinkLive
@@ -62,7 +60,7 @@
         </LinkLive>
       {#match _}
     {/case}
-  </article> -->
+  </article> --}
 {#if @showing_within == :thread and @viewing_main_object}
   {!-- Reading view: title → lead → author → figure → body (borderless; thread card frames it). --}
   <article
