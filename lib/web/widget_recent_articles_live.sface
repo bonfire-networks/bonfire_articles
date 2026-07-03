@@ -24,14 +24,42 @@
                         e(object, :media, nil)
                     )}
                     {#match {primary_image, _files}}
-                      <Bonfire.UI.Articles.ArticleLive
-                        object={object}
-                        activity={activity}
-                        subject={subject}
-                        primary_image={primary_image}
-                        image_position={@image_position}
-                        showing_within={:widget}
-                      />
+                      {#case article_permalink(object)}
+                        {#match permalink when is_binary(permalink)}
+                          <div
+                            id={article_preview_id(activity, object)}
+                            data-href={permalink}
+                            phx-hook="Bonfire.UI.Common.PreviewContentLive#PreviewActivity"
+                            class="previewable_activity cursor-pointer"
+                            tabIndex="0"
+                          >
+                            <Bonfire.UI.Common.OpenPreviewLive
+                              href={permalink}
+                              parent_id={article_preview_id(activity, object)}
+                              open_btn_text=""
+                              title_text={article_title(object)}
+                              modal_assigns={article_preview_modal_assigns(activity, object, permalink)}
+                              root_assigns={[page_title: l("Discussion")]}
+                            />
+                            <Bonfire.UI.Articles.ArticleLive
+                              object={object}
+                              activity={activity}
+                              subject={subject}
+                              primary_image={primary_image}
+                              image_position={@image_position}
+                              showing_within={:widget}
+                            />
+                          </div>
+                        {#match _}
+                          <Bonfire.UI.Articles.ArticleLive
+                            object={object}
+                            activity={activity}
+                            subject={subject}
+                            primary_image={primary_image}
+                            image_position={@image_position}
+                            showing_within={:widget}
+                          />
+                      {/case}
                   {/case}
                 {#match _}
               {/case}

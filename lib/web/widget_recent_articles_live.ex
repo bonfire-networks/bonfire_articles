@@ -31,4 +31,45 @@ defmodule Bonfire.UI.Articles.WidgetRecentArticlesLive do
 
   defp reset_limit(%{"limit" => limit}) when is_binary(limit), do: String.to_integer(limit)
   defp reset_limit(_), do: 5
+
+  defp article_preview_id(activity, object) do
+    deterministic_dom_id(
+      __MODULE__,
+      id(activity) || id(object) || "no-id",
+      "article_preview"
+    )
+  end
+
+  defp article_permalink(object) do
+    case path(object, [], preload_if_needed: false) do
+      permalink when is_binary(permalink) -> "#{permalink}#"
+      _ -> nil
+    end
+  end
+
+  defp article_title(object) do
+    e(Bonfire.UI.Articles.ArticleLive.post_content(object), :name, nil) || l("Discussion")
+  end
+
+  defp article_preview_modal_assigns(activity, object, permalink) do
+    object_id = id(object)
+    activity_id = id(activity) || object_id
+    replied = e(activity, :replied, nil) || e(object, :replied, nil)
+    thread_id = e(replied, :thread_id, nil) || id(e(replied, :thread, nil))
+    reply_to = e(replied, :reply_to, nil)
+
+    Bonfire.UI.Social.ActivityLive.thread_preview_modal_assigns(
+      thread_id,
+      object_id,
+      activity_id,
+      activity,
+      object,
+      reply_to
+    ) ++
+      [
+        post_id: thread_id || object_id,
+        current_url: permalink,
+        cw: false
+      ]
+  end
 end
