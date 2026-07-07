@@ -150,7 +150,7 @@
       prompt_external_links={@showing_within == :flags}
     >
       <div class={
-        "flex flex-col gap-content pt-card border-t-hair border-secondary px-card mt-card",
+        "flex flex-col gap-content pt-card border-t-hair border-secondary px-card",
         "!border-0 !px-0 !mt-0 !pt-0": @showing_within == :widget
       }>
         {#case e(post_content(@object), :name, nil)}
