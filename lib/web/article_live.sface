@@ -171,7 +171,11 @@
             (@cw != true and e(post_content(@object), :html_body, nil))}
           {#match excerpt when is_binary(excerpt) and excerpt != ""}
             <div data-role="summary" class="text-body tracking-[-0.02em]">
-              {maybe_truncate(Bonfire.Common.Text.text_only(excerpt), false, 280)}
+              {maybe_truncate(
+                Bonfire.Common.Text.text_only(Bonfire.Common.Text.maybe_markdown_to_html(excerpt)),
+                false,
+                280
+              )}
             </div>
           {#match _}
         {/case}
