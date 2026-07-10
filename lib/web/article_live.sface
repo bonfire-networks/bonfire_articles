@@ -161,7 +161,7 @@
             {!-- plain (no link) so the click bubbles to the preview hook --}
             <div
               data-role="name"
-              class="translatable text-display font-medium tracking-[-0.02em] leading-snug text-base-content"
+              class="translatable text-display font-medium tracking-[-0.02em] text-base-content"
             >
               {rich(name)}
             </div>
@@ -171,7 +171,7 @@
         {#case e(post_content(@object), :summary, nil) ||
             (@cw != true and e(post_content(@object), :html_body, nil))}
           {#match excerpt when is_binary(excerpt) and excerpt != ""}
-            <div data-role="summary" class="text-body tracking-[-0.02em]">
+            <div data-role="summary" class="text-heading tracking-[-0.02em]">
               {maybe_truncate(
                 Bonfire.Common.Text.text_only(Bonfire.Common.Text.maybe_markdown_to_html(excerpt)),
                 false,
@@ -210,7 +210,7 @@
               {#case Bonfire.Files.Media.media_label(@primary_image)}
                 {#match nil}
                 {#match caption}
-                  <div class="pt-1.5 text-caption text-muted italic">{rich(caption)}</div>
+                  <div class="pt-3 text-caption text-secondary">{rich(caption)}</div>
               {/case}
             </div>
           {#match _}
