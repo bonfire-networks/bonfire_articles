@@ -44,4 +44,22 @@ defmodule Bonfire.Articles.ArticlesTest do
     assert FeedLoader.feed_contains?(posts_feed, note, current_user: user)
     refute FeedLoader.feed_contains?(posts_feed, article, current_user: user)
   end
+
+  test "a published article is formatted for search indexing (with the Article index_type)" do
+    user = Fake.fake_user!()
+
+    article =
+      fake_article!(user, "public", @article_attrs)
+      |> repo().maybe_preload([:post_content, :activity])
+
+    # precondition: we're exercising the Article dispatch path, not a Post
+    assert Types.object_type(article) == Article
+
+    doc = Bonfire.Search.Indexer.prepare_indexable_object(article)
+
+    assert is_map(doc), "expected an indexable doc, got: #{inspect(doc)}"
+    assert doc["index_type"] == Types.module_to_str(Article)
+    assert doc["post_content"]["name"] == "My article title"
+    assert doc["post_content"]["html_body"] =~ "Some long-form body."
+  end
 end

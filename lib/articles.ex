@@ -41,6 +41,16 @@ defmodule Bonfire.Articles do
 
   def search(search, opts \\ []), do: Posts.search(search, with_schema(opts))
 
+  @doc """
+  Formats an article for the search index. Reuses `Bonfire.Posts.indexing_object_format/1` (articles share the `PostContent` mixin) but stamps the Article `index_type` so articles are classified correctly. Dispatched to by `Bonfire.Search.Indexer.prepare_indexable_object/1` via the `ContextModule` registry, which routes `Article` structs here (not to `Bonfire.Posts`).
+  """
+  def indexing_object_format(object) do
+    case Posts.indexing_object_format(object) do
+      doc when is_map(doc) -> Map.put(doc, "index_type", Types.module_to_str(Article))
+      other -> other
+    end
+  end
+
   def delete(object, opts \\ []), do: Posts.delete(object, opts)
 
   def count_total(), do: repo().one(select(Article, [u], count(u.id)))
