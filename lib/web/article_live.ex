@@ -32,6 +32,22 @@ defmodule Bonfire.UI.Articles.ArticleLive do
     # |> debug("activity_note_object")
   end
 
+  @doc """
+  Resolves an article's byline author, preferring the creator stored on the article over contextual subjects such as a profile-feed owner or booster.
+
+  ## Examples
+
+      iex> author = %{id: "author"}
+      iex> feed_owner = %{id: "feed-owner"}
+      iex> activity = %{subject: %{id: "booster"}}
+      iex> Bonfire.UI.Articles.ArticleLive.resolve_author(%{created: %{creator: author}}, feed_owner, activity)
+      %{id: "author"}
+  """
+  def resolve_author(object, subject, activity) do
+    e(object, :created, :creator, nil) || e(object, :creator, nil) || subject ||
+      e(activity, :subject, nil)
+  end
+
   def maybe_truncate(input, skip \\ false, length \\ 800)
 
   def maybe_truncate(input, skip, length) when skip != true and is_binary(input) do

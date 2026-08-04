@@ -52,11 +52,12 @@
     {/case}
 
     {!-- Author --}
-    {#case @subject}
+    {#case resolve_author(@object, @subject, @activity)}
       {#match nil}
       {#match author}
         <LinkLive
           to={path(author)}
+          opts={"data-role": "article_byline"}
           class="inline-flex items-center gap-half w-fit text-body text-base-content hover:text-primary transition-colors"
         >
           <Bonfire.UI.Common.AvatarLive
@@ -182,10 +183,11 @@
         {/case}
 
         {!-- Author byline (only when it resolves to a real user) --}
-        {#case @subject || e(@activity, :subject, nil) || e(@object, :created, :creator, nil)}
+        {#case resolve_author(@object, @subject, @activity)}
           {#match %{id: _} = author}
             <LinkLive
               to={path(author)}
+              opts={"data-role": "article_byline"}
               class="block w-fit mt-card text-body font-medium text-base-content hover:text-primary transition-colors"
             >
               {e(author, :profile, :name, nil) || e(author, :character, :username, l("Unknown"))}
