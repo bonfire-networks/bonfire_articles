@@ -14,7 +14,10 @@
           empty_icon="ion:newspaper-outline"
           empty_message={l("No articles to read yet. Federated long-form posts will show up here as soon as they arrive.")}
         >
-          <div class="flex flex-col bonfire-wrapper divide-secondary divide-hair !px-0 gap-4">
+          <div
+            data-id="recent_articles"
+            class="flex flex-col bonfire-wrapper divide-secondary divide-hair !px-0 gap-4"
+          >
             {#for fp <- articles}
               {#case {e(fp, :activity, nil), e(fp, :activity, :object, nil) || e(fp, :object, nil),
                  e(fp, :activity, :subject, nil) || e(fp, :subject, nil)}}
