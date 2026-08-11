@@ -25,7 +25,8 @@ defmodule Bonfire.UI.Articles.WidgetRecentArticlesLive do
      assign_flash(
        socket,
        :info,
-       l("Recent articles have been reset.") <> l(" You need to reload to see updates, if any.")
+       l("Recent articles have been reset.") <>
+         " " <> l("You need to reload to see updates, if any.")
      )}
   end
 
