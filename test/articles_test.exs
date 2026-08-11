@@ -4,11 +4,17 @@ defmodule Bonfire.Articles.ArticlesTest do
 
   alias Bonfire.Articles
   alias Bonfire.Articles.Article
+  alias Bonfire.UI.Articles.ArticleLive
   alias Bonfire.Social.FeedLoader
   alias Bonfire.Common.Types
   alias Bonfire.Me.Fake
 
   @article_attrs %{post_content: %{name: "My article title", html_body: "Some long-form body."}}
+
+  test "article preview truncation ends at a word boundary with a typographic ellipsis" do
+    assert ArticleLive.maybe_truncate("A complete phrase with trailing words", false, 20) ==
+             "A complete phrase…"
+  end
 
   test "publishing an article creates a Bonfire.Articles.Article (not a Post)" do
     user = Fake.fake_user!()

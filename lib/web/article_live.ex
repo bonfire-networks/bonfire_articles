@@ -48,10 +48,11 @@ defmodule Bonfire.UI.Articles.ArticleLive do
       e(activity, :subject, nil)
   end
 
+  @doc "Truncates preview copy at a word boundary and uses a typographic ellipsis."
   def maybe_truncate(input, skip \\ false, length \\ 800)
 
   def maybe_truncate(input, skip, length) when skip != true and is_binary(input) do
-    Text.sentence_truncate(input, length, "...")
+    Text.sentence_truncate(input, length, "…")
   end
 
   def maybe_truncate(input, _skip, _length), do: input
