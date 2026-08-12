@@ -220,7 +220,10 @@
         {/case}
       </div>
 
-      <div class={"flex items-center gap-2 mt-2 pb-card px-card", "!px-0": @showing_within == :widget}>
+      <div
+        data-role="article_meta"
+        class={"flex items-center gap-2 mt-2 pb-card px-card", "!px-0": @showing_within == :widget}
+      >
         <Bonfire.UI.Social.Activity.TranslateButtonsLive
           object={@object}
           activity={@activity}
