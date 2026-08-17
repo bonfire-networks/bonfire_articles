@@ -143,7 +143,7 @@
     data-rendered={@showing_within}
     data-main-object={@viewing_main_object}
     class={
-      "group article flex flex-col previewable_activity cursor-pointer bg-base-100 overflow-hidden -mx-card",
+      "group article flex flex-col previewable_activity cursor-pointer overflow-hidden -mx-card",
       "!mx-0 px-4": @showing_within == :widget
     }
   >
