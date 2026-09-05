@@ -16,7 +16,7 @@
         >
           <div
             data-id="recent_articles"
-            class="flex flex-col bonfire-wrapper divide-secondary divide-hair !px-0 gap-4"
+            class="recent-articles flex flex-col p-card px-0 border-0 border-secondary rounded-none bg-transparent shadow-none overflow-visible divide-secondary divide-hair gap-0 [&>*]:py-content [&>*]:border-t-0 [&>:first-child]:pt-0 [&>:last-child]:pb-0"
           >
             {#for fp <- articles}
               {#case {e(fp, :activity, nil), e(fp, :activity, :object, nil) || e(fp, :object, nil),
@@ -33,7 +33,7 @@
                             id={article_preview_id(activity, object)}
                             data-href={permalink}
                             phx-hook="Bonfire.UI.Common.PreviewContentLive#PreviewActivity"
-                            class="previewable_activity cursor-pointer"
+                            class="previewable_activity cursor-pointer focus-visible:rounded-selector focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-primary focus-visible:outline-offset-4"
                             tabIndex="0"
                           >
                             <Bonfire.UI.Common.OpenPreviewLive

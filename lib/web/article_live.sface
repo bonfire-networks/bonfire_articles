@@ -143,7 +143,7 @@
     data-rendered={@showing_within}
     data-main-object={@viewing_main_object}
     class={
-      "group article flex flex-col previewable_activity cursor-pointer overflow-hidden -mx-card",
+      "group article flex flex-col previewable_activity cursor-pointer overflow-hidden -mx-card [.recent-articles_&]:px-0 [.recent-articles_&]:bg-transparent [.recent-articles_&]:overflow-visible [.recent-articles>&]:focus-visible:rounded-selector [.recent-articles>&]:focus-visible:outline-2 [.recent-articles>&]:focus-visible:outline-solid [.recent-articles>&]:focus-visible:outline-primary [.recent-articles>&]:focus-visible:outline-offset-4",
       "!mx-0 px-4": @showing_within == :widget
     }
   >
@@ -163,7 +163,7 @@
             {!-- plain (no link) so the click bubbles to the preview hook --}
             <div
               data-role="name"
-              class="translatable text-display font-medium tracking-[-0.02em] text-base-content"
+              class="translatable text-display font-medium tracking-[-0.02em] text-base-content [.recent-articles_&]:line-clamp-2 [.recent-articles_&]:text-body [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:font-(--stream-emphasis-weight)"
             >
               {rich(name)}
             </div>
@@ -173,7 +173,7 @@
         {#case e(post_content(@object), :summary, nil) ||
             (@cw != true and e(post_content(@object), :html_body, nil))}
           {#match excerpt when is_binary(excerpt) and excerpt != ""}
-            <div data-role="summary" class="text-body tracking-[-0.02em]">
+            <div data-role="summary" class="text-body tracking-[-0.02em] [.recent-articles_&]:line-clamp-3 [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:text-muted">
               {maybe_truncate(
                 Bonfire.Common.Text.text_only(Bonfire.Common.Text.maybe_markdown_to_html(excerpt)),
                 false,
@@ -189,7 +189,7 @@
             <LinkLive
               to={path(author)}
               opts={"data-role": "article_byline"}
-              class="block w-fit mt-card text-body font-medium text-base-content hover:text-primary transition-colors"
+              class="block w-fit mt-card text-body font-medium text-base-content hover:text-primary transition-colors [.recent-articles_&]:mt-half [.recent-articles_&]:text-caption"
             >
               {e(author, :profile, :name, nil) || e(author, :character, :username, l("Unknown"))}
             </LinkLive>
@@ -205,7 +205,7 @@
                 role="img"
                 aria-label={Bonfire.Files.Media.media_alt(@primary_image)}
                 data-id="article_cover"
-                class="w-full aspect-[3/2] rounded-box overflow-hidden border-hair border-secondary bg-center bg-no-repeat bg-cover bg-placeholder"
+                class="w-full aspect-[3/2] rounded-box overflow-hidden border-hair border-secondary bg-center bg-no-repeat bg-cover bg-placeholder [.recent-articles_&]:aspect-video [.recent-articles_&]:rounded-selector"
                 style={["background-image": "url('#{URI.encode(url)}')"]}
               >
                 <span class="sr-only">{Bonfire.Files.Media.media_alt(@primary_image)}</span>
@@ -222,7 +222,7 @@
 
       <div
         data-role="article_meta"
-        class={"flex items-center gap-2 mt-2 pb-card px-card", "!px-0": @showing_within == :widget}
+        class={"flex items-center gap-2 mt-2 pb-card px-card [.recent-articles_&]:mt-half [.recent-articles_&]:pb-0", "!px-0": @showing_within == :widget}
       >
         <Bonfire.UI.Social.Activity.TranslateButtonsLive
           object={@object}
