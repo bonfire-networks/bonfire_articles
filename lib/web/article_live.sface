@@ -173,7 +173,10 @@
         {#case e(post_content(@object), :summary, nil) ||
             (@cw != true and e(post_content(@object), :html_body, nil))}
           {#match excerpt when is_binary(excerpt) and excerpt != ""}
-            <div data-role="summary" class="text-body tracking-[-0.02em] [.recent-articles_&]:line-clamp-3 [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:text-muted">
+            <div
+              data-role="summary"
+              class="text-body tracking-[-0.02em] [.recent-articles_&]:line-clamp-3 [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:text-muted"
+            >
               {maybe_truncate(
                 Bonfire.Common.Text.text_only(Bonfire.Common.Text.maybe_markdown_to_html(excerpt)),
                 false,
@@ -222,7 +225,10 @@
 
       <div
         data-role="article_meta"
-        class={"flex items-center gap-2 mt-2 pb-card px-card [.recent-articles_&]:mt-half [.recent-articles_&]:pb-0", "!px-0": @showing_within == :widget}
+        class={
+          "flex items-center gap-2 mt-2 pb-card px-card [.recent-articles_&]:mt-half [.recent-articles_&]:pb-0",
+          "!px-0": @showing_within == :widget
+        }
       >
         <Bonfire.UI.Social.Activity.TranslateButtonsLive
           object={@object}
