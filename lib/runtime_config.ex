@@ -18,6 +18,10 @@ defmodule Bonfire.Articles.RuntimeConfig do
         {:article, Bonfire.UI.Articles.ArticleLive}
       ]
 
+    # An article is something written, so publishing one reads as writing rather than as creating an object (`Bonfire.Social.Activities.experienced_as/2`). Declared here because what counts as written content is a property of the kinds of thing an instance has
+    config :bonfire_social, Bonfire.Social.Activities,
+      written_object_types: [Bonfire.Articles.Article]
+
     # Articles: title + summary shown by default (not togglable), plus the CW siren.
     config :bonfire_ui_common, Bonfire.UI.Common.InputControlsLive,
       enable_fields: [
