@@ -42,5 +42,5 @@ defmodule Bonfire.UI.Articles.CreateArticleLive do
   def smart_input_module, do: [:article, Bonfire.Articles.Article]
 
   def smart_input_icon(_), do: "ph:article-ny-times-duotone"
-  def smart_input_label(_), do: l("Article")
+  def smart_input_label(_), do: l("Create article")
 end
