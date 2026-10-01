@@ -8,8 +8,6 @@
           reset_cache_event="Bonfire.UI.Articles.WidgetRecentArticlesLive:reset_recent_articles"
           reset_cache_values={%{limit: @limit}}
           can_reset
-          class="pt-card border-y border-y-secondary border-y-hair pb-2"
-          title_class="flex items-center justify-between pb-card text-xs font-normal uppercase tracking-wide text-base-content px-base"
           empty={articles == []}
           empty_icon="ion:newspaper-outline"
           empty_message={l("No articles to read yet. Federated long-form posts will show up here as soon as they arrive.")}
