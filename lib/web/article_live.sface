@@ -152,7 +152,7 @@
       prompt_external_links={@showing_within == :flags}
     >
       <div class={
-        "flex flex-col gap-content pt-card border-t-hair border-secondary px-card",
+        "flex flex-col gap-content pt-card border-t-hair border-divider px-card",
         "!border-0 !px-0 !mt-0 !pt-0": @showing_within == :widget,
         "replied_to_article !border-0 !pl-0 !pr-card !mt-0 !border-none !border-0 !pt-0":
           @activity_inception
@@ -208,7 +208,7 @@
                 role="img"
                 aria-label={Bonfire.Files.Media.media_alt(@primary_image)}
                 data-id="article_cover"
-                class="w-full aspect-[3/2] rounded-box overflow-hidden border-hair border-secondary bg-center bg-no-repeat bg-cover bg-placeholder [.recent-articles_&]:aspect-video [.recent-articles_&]:rounded-selector"
+                class="w-full aspect-[3/2] rounded-box overflow-hidden border-hair border-divider bg-center bg-no-repeat bg-cover bg-placeholder [.recent-articles_&]:aspect-video [.recent-articles_&]:rounded-selector"
                 style={["background-image": "url('#{URI.encode(url)}')"]}
               >
                 <span class="sr-only">{Bonfire.Files.Media.media_alt(@primary_image)}</span>
