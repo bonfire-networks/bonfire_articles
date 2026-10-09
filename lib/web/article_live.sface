@@ -25,7 +25,7 @@
       {#match name}
         <h1
           data-role="name"
-          class="translatable text-feature font-medium tracking-[-0.02em] text-base-content"
+          class="translatable type-feature text-base-content"
         >
           {rich(name)}
         </h1>
@@ -43,7 +43,7 @@
         {#else}
           <div
             data-role="summary"
-            class="translatable text-intro-sm tracking-[-0.02em] text-base-content max-w-prose"
+            class="translatable text-lg tracking-tight text-base-content max-w-prose"
           >
             {rich(summary, skip_markdown: @is_remote, __unsafe__: !@is_remote)}
           </div>
@@ -58,7 +58,7 @@
         <LinkLive
           to={path(author)}
           opts={"data-role": "article_byline"}
-          class="inline-flex self-start items-center gap-half max-w-full text-body text-base-content hover:text-primary transition-colors"
+          class="inline-flex self-start items-center gap-half max-w-full text-base text-base-content hover:text-primary transition-colors"
         >
           <Bonfire.UI.Common.AvatarLive
             ring
@@ -88,7 +88,7 @@
           {#case Bonfire.Files.Media.media_label(@primary_image)}
             {#match nil}
             {#match caption}
-              <figcaption class="mt-half text-caption text-muted italic">{rich(caption)}</figcaption>
+              <figcaption class="mt-half text-xs text-muted italic">{rich(caption)}</figcaption>
           {/case}
         </figure>
       {#match _}
@@ -163,7 +163,7 @@
             {!-- plain (no link) so the click bubbles to the preview hook --}
             <div
               data-role="name"
-              class="translatable text-display font-medium tracking-[-0.02em] text-base-content [.recent-articles_&]:line-clamp-2 [.recent-articles_&]:text-body [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:font-(--stream-emphasis-weight)"
+              class="translatable text-xl font-medium tracking-tight text-base-content [.recent-articles_&]:line-clamp-2 [.recent-articles_&]:text-base [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:font-(--stream-emphasis-weight)"
             >
               {rich(name)}
             </div>
@@ -175,7 +175,7 @@
           {#match excerpt when is_binary(excerpt) and excerpt != ""}
             <div
               data-role="summary"
-              class="text-body tracking-[-0.02em] [.recent-articles_&]:line-clamp-3 [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:text-muted"
+              class="text-base tracking-tight [.recent-articles_&]:line-clamp-3 [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:text-muted"
             >
               {maybe_truncate(
                 Bonfire.Common.Text.text_only(Bonfire.Common.Text.maybe_markdown_to_html(excerpt)),
@@ -192,7 +192,7 @@
             <LinkLive
               to={path(author)}
               opts={"data-role": "article_byline"}
-              class="block w-fit mt-card text-body font-medium text-base-content hover:text-primary transition-colors [.recent-articles_&]:mt-half [.recent-articles_&]:text-caption"
+              class="block w-fit mt-card text-base font-medium text-base-content hover:text-primary transition-colors [.recent-articles_&]:mt-half [.recent-articles_&]:text-xs"
             >
               {e(author, :profile, :name, nil) || e(author, :character, :username, l("Unknown"))}
             </LinkLive>
@@ -216,7 +216,7 @@
               {#case Bonfire.Files.Media.media_label(@primary_image)}
                 {#match nil}
                 {#match caption}
-                  <div class="pt-3 text-caption text-secondary">{rich(caption)}</div>
+                  <div class="pt-3 text-xs text-secondary">{rich(caption)}</div>
               {/case}
             </div>
           {#match _}
