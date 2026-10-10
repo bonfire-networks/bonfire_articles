@@ -14,7 +14,7 @@
         >
           <div
             data-id="recent_articles"
-            class="recent-articles flex flex-col p-card px-0 border-0 border-divider rounded-none bg-transparent shadow-none overflow-visible divide-divider divide-hair gap-0 [&>*]:py-content [&>*]:border-t-0 [&>:first-child]:pt-0 [&>:last-child]:pb-0"
+            class="recent-articles flex flex-col p-card px-0 border-0 border-divider rounded-none bg-transparent shadow-none overflow-visible divide-divider divide-hair gap-0 [&>*]:py-3 [&>*]:border-t-0 [&>:first-child]:pt-0 [&>:last-child]:pb-0"
           >
             {#for fp <- articles}
               {#case {e(fp, :activity, nil), e(fp, :activity, :object, nil) || e(fp, :object, nil),
