@@ -22,11 +22,11 @@ defmodule Bonfire.Articles.RuntimeConfig do
     config :bonfire_social, Bonfire.Social.Activities,
       written_object_types: [Bonfire.Articles.Article]
 
-    # Articles: title + summary shown by default (not togglable), plus the CW siren.
+    # Articles: title shown by default; the summary is optional, offered from the composer's "more" menu; plus the CW siren.
     config :bonfire_ui_common, Bonfire.UI.Common.InputControlsLive,
       enable_fields: [
         title: [article: [show_by_default: true]],
-        summary: [article: [show_by_default: true]],
+        summary: [article: [enable_toggle: true]],
         sensitive: [article: [enable_toggle: true]]
       ]
   end
