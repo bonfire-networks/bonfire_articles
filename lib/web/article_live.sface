@@ -160,7 +160,7 @@
             {!-- plain (no link) so the click bubbles to the preview hook --}
             <div
               data-role="name"
-              class="translatable text-xl font-medium tracking-tight text-base-content [.recent-articles_&]:line-clamp-2 [.recent-articles_&]:text-base [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:font-(--stream-emphasis-weight)"
+              class="translatable text-xl font-medium tracking-tight text-base-content [.recent-articles_&]:line-clamp-2 [.recent-articles_&]:text-base [.recent-articles_&]:wrap-anywhere [.recent-articles_&]:text-pretty [.recent-articles_&]:font-bold"
             >
               {rich(name)}
             </div>
