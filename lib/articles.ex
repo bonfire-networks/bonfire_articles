@@ -113,36 +113,44 @@ defmodule Bonfire.Articles do
     Posts.ap_receive_activity(creator, activity, object, Keyword.put(opts, :schema, Article))
   end
 
-  # --- Recent-articles widget loader (cached per user + limit) ---
+  # --- Recent-articles widget loader (cached for guests and for everyone signed in) ---
 
   @doc """
-  Recent articles from followed users, for the "Recent Articles" widget. Cached per user and limit
-  for 1h; the key is built once by `recent_cache_key/2` so the load and any reset always agree.
-  Pass the standard `:cache` opt (`cache: :refresh` busts + recomputes — the widget's refresh button).
+  The most recent of all known articles (the `:articles` feed), for the "Recent Articles" widget. Cached for 1h, once for guests and once for everyone signed in, each loaded as that circle (`Bonfire.Boundaries.Circles.query_as_circle/1`) rather than as one user, so nobody's restricted articles reach anyone else; the widget then drops what each viewer may not see, eg. from someone they blocked. The key is built once by `recent_cache_key/2` so the load and any reset always agree. Pass the standard `:cache` opt (`cache: :refresh` busts + recomputes — the widget's refresh button).
   """
   def list_recent(current_user, limit \\ 5, opts \\ []) do
+    {circle, as_circle_opts} = Bonfire.Boundaries.Circles.query_as_circle(current_user)
+
     Cache.maybe_apply_cached(
       &do_list_recent/2,
-      [current_user, limit],
+      [limit, as_circle_opts],
       opts
-      |> Keyword.put(:cache_key, recent_cache_key(current_user, limit))
+      |> Keyword.put(:cache_key, recent_circle_key(circle, limit))
       |> Keyword.put_new(:expire, :timer.minutes(60))
     )
   end
 
-  defp do_list_recent(current_user, limit) do
+  defp do_list_recent(limit, as_circle_opts) do
     case Bonfire.Social.FeedActivities.feed(
            %{feed_name: :articles},
-           current_user: current_user,
-           paginate: %{limit: limit},
-           preload: [:with_post_content, :with_subject, :with_media]
+           as_circle_opts ++
+             [
+               paginate: %{limit: limit},
+               preload: [:with_post_content, :with_subject, :with_media],
+               # loaded as a circle, not a user, so no viewer for `Activities` to match subjects against
+               skip_err: true
+             ]
          ) do
       %{edges: edges} when is_list(edges) and edges != [] -> edges
       _ -> []
     end
   end
 
-  @doc "Cache key for `list_recent/3` — used by both the loader and any reset, so they can't drift."
-  def recent_cache_key(current_user, limit),
-    do: "widget_recent_articles:#{id(current_user) || "guest"}:#{limit}"
+  @doc "Cache key for `list_recent/3`, the same for everyone signed in, and another for guests. Used by both the loader and any reset, so they can't drift."
+  def recent_cache_key(current_user, limit) do
+    {circle, _opts} = Bonfire.Boundaries.Circles.query_as_circle(current_user)
+    recent_circle_key(circle, limit)
+  end
+
+  defp recent_circle_key(circle, limit), do: "widget_recent_articles:#{circle}:#{limit}"
 end
