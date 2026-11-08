@@ -2,6 +2,7 @@
   module={maybe_component(Bonfire.UI.Social.WritePostContentLive, @__context__)}
   reply_to_id={@reply_to_id}
   context_id={@context_id}
+  context_group={@context_group}
   to_boundaries={@to_boundaries}
   boundary_preset={@boundary_preset}
   to_circles={@to_circles}

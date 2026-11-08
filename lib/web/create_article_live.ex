@@ -10,6 +10,7 @@ defmodule Bonfire.UI.Articles.CreateArticleLive do
   # mirror the props the post composer accepts so they can be forwarded
   prop reply_to_id, :any, default: nil
   prop context_id, :string, default: nil
+  prop context_group, :any, default: nil
   prop to_boundaries, :any, default: nil
   prop boundary_preset, :any, default: nil
   prop to_circles, :list, default: []
@@ -42,5 +43,5 @@ defmodule Bonfire.UI.Articles.CreateArticleLive do
   def smart_input_module, do: [:article, Bonfire.Articles.Article]
 
   def smart_input_icon(_), do: "ph:article-ny-times-duotone"
-  def smart_input_label(_), do: l("Create article")
+  def smart_input_label(_), do: l("Article")
 end
