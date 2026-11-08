@@ -10,7 +10,6 @@ defmodule Bonfire.UI.Articles.CreateArticleLive do
   # mirror the props the post composer accepts so they can be forwarded
   prop reply_to_id, :any, default: nil
   prop context_id, :string, default: nil
-  prop context_group, :any, default: nil
   prop to_boundaries, :any, default: nil
   prop boundary_preset, :any, default: nil
   prop to_circles, :list, default: []
