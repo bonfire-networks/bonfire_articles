@@ -37,6 +37,7 @@ defmodule Bonfire.UI.Articles.CreateArticleLive do
   prop textarea_class, :css_class
   prop replied_activity_class, :css_class
   prop event_target, :any, default: nil
+  prop composer_policy, :map, default: nil
 
   @behaviour Bonfire.UI.Common.SmartInputModule
   def smart_input_module, do: [:article, Bonfire.Articles.Article]

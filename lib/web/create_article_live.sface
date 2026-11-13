@@ -1,5 +1,6 @@
 <StatelessComponent
   module={maybe_component(Bonfire.UI.Social.WritePostContentLive, @__context__)}
+  composer_policy={@composer_policy}
   reply_to_id={@reply_to_id}
   context_id={@context_id}
   to_boundaries={@to_boundaries}
