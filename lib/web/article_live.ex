@@ -8,6 +8,10 @@ defmodule Bonfire.UI.Articles.ArticleLive do
   prop activity, :any, default: nil
   prop subject, :any, default: nil
   prop primary_image, :any, default: nil
+
+  @doc "Its primary image is shown as its cover (asked by `Bonfire.UI.Social.ActivityLive`, which then lists the other media apart)."
+  def primary_image_as_cover?, do: true
+
   # `:widget` layout only — :side (thumbnail beside text) or :bottom (full-width below)
   prop image_position, :atom, default: :side
   prop viewing_main_object, :boolean, default: false

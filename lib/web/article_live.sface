@@ -96,10 +96,8 @@
       {#case e(post_content(@object), :html_body, nil)}
         {#match nil}
         {#match html_body}
-          <Bonfire.UI.Social.Activity.TruncatableContentLive
+          <Bonfire.UI.Common.TruncatableContentLive
             html_body={html_body}
-            activity={@activity}
-            object={@object}
             parent_id={deterministic_dom_id(__MODULE__, id(@activity) || id(@object), nil, @parent_id)}
             object_type={:article}
             showing_within={@showing_within}
