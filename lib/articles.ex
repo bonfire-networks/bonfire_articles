@@ -132,7 +132,7 @@ defmodule Bonfire.Articles do
 
   defp do_list_recent(limit, as_circle_opts) do
     case Bonfire.Social.FeedActivities.feed(
-           %{feed_name: :articles},
+           Map.merge(%{feed_name: :articles}, Bonfire.Social.Feeds.widget_origin_filters()),
            as_circle_opts ++
              [
                paginate: %{limit: limit},
@@ -152,5 +152,6 @@ defmodule Bonfire.Articles do
     recent_circle_key(circle, limit)
   end
 
-  defp recent_circle_key(circle, limit), do: "widget_recent_articles:#{circle}:#{limit}"
+  defp recent_circle_key(circle, limit),
+    do: "widget_recent_articles:#{circle}:#{limit}:#{Bonfire.Social.Feeds.widget_origin_key()}"
 end
