@@ -85,7 +85,7 @@
           {#case Bonfire.Files.Media.media_label(@primary_image)}
             {#match nil}
             {#match caption}
-              <figcaption class="mt-2 text-xs text-muted italic">{rich(caption)}</figcaption>
+              <figcaption class="mt-2 text-xs text-muted italic">{Text.text_only(caption)}</figcaption>
           {/case}
         </figure>
       {#match _}
@@ -211,7 +211,7 @@
               {#case Bonfire.Files.Media.media_label(@primary_image)}
                 {#match nil}
                 {#match caption}
-                  <div class="pt-3 text-xs text-secondary">{rich(caption)}</div>
+                  <div class="pt-3 text-xs text-secondary">{Text.text_only(caption)}</div>
               {/case}
             </div>
           {#match _}

@@ -9,9 +9,18 @@ defmodule Bonfire.Articles.Repo.Migrations.PostsToArticles do
   """
   use Ecto.Migration
   alias EctoSparkles.DataMigration
-  use DataMigration
 
   alias Bonfire.Articles.PostsToArticlesMigration
+
+  # what `use DataMigration` sets, which is not used here so that `up/0` can hand the runner this migration's repo
+  @behaviour DataMigration
+  @disable_ddl_transaction true
+  @disable_migration_lock true
+
+  # the migration's own repo, so the flip acts on the database being migrated
+  def up, do: DataMigration.Runner.run(__MODULE__, repo: repo())
+
+  def down, do: :ok
 
   @impl DataMigration
   def base_query, do: PostsToArticlesMigration.base_query()
@@ -22,5 +31,5 @@ defmodule Bonfire.Articles.Repo.Migrations.PostsToArticles do
   end
 
   @impl DataMigration
-  def migrate(rows), do: PostsToArticlesMigration.migrate(rows)
+  def migrate(rows, opts), do: PostsToArticlesMigration.migrate(rows, opts)
 end

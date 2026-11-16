@@ -29,11 +29,12 @@ defmodule Bonfire.Articles.PostsToArticlesMigration do
     )
   end
 
-  @doc "Flips the given pointer rows' `table_id` from Post to Article."
-  def migrate(rows) do
+  @doc "Flips the given pointer rows' `table_id` from Post to Article, in the repo given as `opts[:repo]` (a migration passes the one it runs on), else the normal one."
+  def migrate(rows, opts \\ []) do
     ids = Enum.map(rows, & &1.id)
+    repo = Keyword.get(opts, :repo, Bonfire.Common.Repo)
 
-    Bonfire.Common.Repo.update_all(
+    repo.update_all(
       from(pp in "pointers_pointer", where: pp.id in ^ids),
       set: [table_id: Needle.ULID.dump!(@article_table_id)]
     )
