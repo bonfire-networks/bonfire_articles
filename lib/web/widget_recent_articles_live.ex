@@ -9,6 +9,12 @@ defmodule Bonfire.UI.Articles.WidgetRecentArticlesLive do
   """
   use Bonfire.UI.Common.Web, :stateless_component
 
+  declare_widget(l("Recent articles"),
+    width: :narrow,
+    current_user_required: true,
+    props: [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom]
+  )
+
   prop limit, :integer, default: 5
   prop widget_title, :string, default: nil
   prop image_position, :atom, default: :side, values: [:side, :bottom]

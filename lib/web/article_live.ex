@@ -52,6 +52,15 @@ defmodule Bonfire.UI.Articles.ArticleLive do
       e(activity, :subject, nil)
   end
 
+  @doc "Resolves the byline author, or nil when it is the activity's subject (already shown in the activity header). Compares ids only."
+  def byline_author(object, subject, activity) do
+    author = resolve_author(object, subject, activity)
+
+    if Bonfire.UI.Social.ActivityLive.creator_is_subject?(id(author), activity),
+      do: nil,
+      else: author
+  end
+
   @doc "Truncates preview copy at a word boundary and uses a typographic ellipsis."
   def maybe_truncate(input, skip \\ false, length \\ 800)
 

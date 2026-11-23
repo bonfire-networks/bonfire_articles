@@ -49,7 +49,7 @@
     {/case}
 
     {!-- Author --}
-    {#case resolve_author(@object, @subject, @activity)}
+    {#case byline_author(@object, @subject, @activity)}
       {#match nil}
       {#match author}
         <LinkLive
@@ -182,7 +182,7 @@
         {/case}
 
         {!-- Author byline (only when it resolves to a real user) --}
-        {#case resolve_author(@object, @subject, @activity)}
+        {#case byline_author(@object, @subject, @activity)}
           {#match %{id: _} = author}
             <LinkLive
               to={path(author)}
