@@ -25,6 +25,11 @@ defmodule Bonfire.UI.Articles.ArticleLive do
   prop activity_component_id, :string, default: nil
   prop parent_id, :any, default: nil
 
+  @doc "The media its body places, by URL, and the body already cut there, when the caller found them (`Bonfire.UI.Social.ActivityLive`, with `Bonfire.Files.InlineMedia.split/3`), so they aren't found again. Without them, it finds the media itself"
+  # `:any`, not `:map`: the caller passes nil when it found nothing, and a dynamic component checks prop types
+  prop inline_media, :any, default: nil
+  prop body_parts, :any, default: nil
+
   def preloads(),
     do: [
       :post_content,
