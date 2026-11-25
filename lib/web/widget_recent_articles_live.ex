@@ -12,7 +12,8 @@ defmodule Bonfire.UI.Articles.WidgetRecentArticlesLive do
   declare_widget(l("Recent articles"),
     width: :narrow,
     current_user_required: true,
-    props: [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom]
+    props: [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom],
+    skeleton: :list
   )
 
   prop limit, :integer, default: 5
