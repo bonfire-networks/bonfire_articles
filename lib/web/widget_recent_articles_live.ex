@@ -2,15 +2,12 @@ defmodule Bonfire.UI.Articles.WidgetRecentArticlesLive do
   @moduledoc """
   A widget displaying recent articles from followed users.
 
-  Shows the most recent articles (posts with title + substantial content)
-  from users the current user follows, without subject or action buttons.
-  Results are cached per user and limit for 1 hour to avoid reloading on
-  every LiveView render.
+  Shows the most recent articles (posts with title + substantial content) from users the current user follows, without subject or action buttons.
+  Results are cached per user and limit for 1 hour to avoid reloading on every LiveView render.
   """
   use Bonfire.UI.Common.Web, :stateless_component
 
   declare_widget(l("Recent articles"),
-    width: :narrow,
     current_user_required: true,
     props: [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom],
     skeleton: :list
